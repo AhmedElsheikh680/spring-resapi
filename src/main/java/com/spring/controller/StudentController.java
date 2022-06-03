@@ -59,7 +59,7 @@ public class StudentController {
 	}
 	
 	@ExceptionHandler
-	public ResponseEntity<StudentError> getException(StudentException studentException) {
+	public ResponseEntity<StudentError> getExceptionNotFound(StudentException studentException) {
 		StudentError studentError = new StudentError();
 		studentError.setStatuscode(HttpStatus.NOT_FOUND.value());
 		studentError.setMessage(studentException.getMessage());
@@ -68,6 +68,15 @@ public class StudentController {
 		return new ResponseEntity<StudentError>(studentError, HttpStatus.NOT_FOUND);
 	}
 	
+	
+	@ExceptionHandler
+	public ResponseEntity<StudentError> getException(Exception e) {
+		StudentError studentError = new StudentError();
+		studentError.setStatuscode(HttpStatus.BAD_REQUEST.value());
+		studentError.setMessage(e.getMessage());
+		studentError.setTimestamp(System.currentTimeMillis());
+		return new ResponseEntity<StudentError>(studentError, HttpStatus.BAD_REQUEST);
+	}
 	
 	
 	
